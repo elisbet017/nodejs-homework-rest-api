@@ -1,4 +1,9 @@
-const { HttpError, requestError, validateData } = require("../helpers");
+const {
+  HttpError,
+  requestError,
+  validateData,
+  addRequestError,
+} = require("../helpers");
 
 const {
   getAllContacts,
@@ -37,7 +42,7 @@ const add = async (res, req, next) => {
     const body = req.req.body;
     const { error } = validateData.validateBody(body);
     if (error) {
-      requestError(res, error);
+      addRequestError(res, error);
       return;
     }
     const contact = await addContact(body);

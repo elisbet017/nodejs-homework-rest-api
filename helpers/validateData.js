@@ -1,6 +1,5 @@
 const {
   addSchema,
-  updateSchema,
   statusSchema,
 } = require("../service/schemas/contact.js");
 
@@ -13,7 +12,7 @@ const validateUpdatedFields = (body, res) => {
   if (!name && !email && !phone && !favorite) {
     return res.status(400).json({ message: "missing fields" });
   }
-  return updateSchema.validate(body);
+  return addSchema.validate(body);
 };
 
 const validateStatusBody = (body) => {

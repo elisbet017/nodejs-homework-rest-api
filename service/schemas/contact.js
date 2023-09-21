@@ -15,13 +15,6 @@ const addSchema = Joi.object({
   favorite: Joi.boolean(),
 });
 
-const updateSchema = Joi.object({
-  name: Joi.string(),
-  email: Joi.string(),
-  phone: Joi.string(),
-  favorite: Joi.boolean(),
-});
-
 const statusSchema = Joi.object({
   favorite: Joi.boolean().required().messages({
     "any.required": "missing field favorite",
@@ -50,4 +43,4 @@ const contactSchema = new Schema(
 
 const Contact = mongoose.model("contacts", contactSchema);
 
-module.exports = { Contact, addSchema, statusSchema, updateSchema };
+module.exports = { Contact, addSchema, statusSchema};
