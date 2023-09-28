@@ -7,6 +7,8 @@ const {
   updateStatus,
 } = require("../controller");
 
+// додати міршрути що відповідають за реєстрацію і тд
+
 const express = require("express");
 
 const router = express.Router();

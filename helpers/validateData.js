@@ -1,7 +1,8 @@
 const {
-  addSchema,
-  statusSchema,
-} = require("../service/schemas/contact.js");
+  registerSchema,
+} = require("../models/user.js");
+const { addSchema, statusSchema } = require("../models/contact.js");
+const { requestError } = require("./requestError.js");
 
 const validateBody = (body) => {
   return addSchema.validate(body);
@@ -17,10 +18,18 @@ const validateUpdatedFields = (body, res) => {
 
 const validateStatusBody = (body) => {
   return statusSchema.validate(body);
-}
+};
+
+const validateUser = (res, body) => {
+  const validatedData = registerSchema.validate(body);
+  if (validatedData.error) {
+    return requestError(res, validatedData.error);
+  }
+};
 
 module.exports = {
   validateBody,
   validateUpdatedFields,
   validateStatusBody,
+  validateUser,
 };
