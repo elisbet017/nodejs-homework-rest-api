@@ -16,4 +16,5 @@ const createToken = (id) => {
 // } catch (e) {
 //   console.log(e.message)
 // }
+
 module.exports = createToken;

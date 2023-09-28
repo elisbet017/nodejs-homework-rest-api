@@ -1,16 +1,7 @@
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// require("dotenv").config();
 
-// const { SECRET_KEY } = process.env;
-
-const {
-  HttpError,
-  requestError,
-  validateData,
-  addRequestError,
-} = require("../helpers");
-const { register, login } = require("../service/auth");
+const { validateData } = require("../helpers");
+const { register, login, updateToken, logout } = require("../service/auth");
 const createToken = require("../helpers/jwt");
 
 const registerUser = async (req, res, next) => {
@@ -52,13 +43,14 @@ const loginUser = async (req, res, next) => {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
 
-
     if (!passwordCompare) {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
-    
+
     const token = createToken(user._id);
-    
+
+    await updateToken(user._id, token);
+
     res.json({
       token: token,
       user: {
@@ -71,7 +63,20 @@ const loginUser = async (req, res, next) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  const { _id } = req.user;
+  await logout(_id);
+  return res.status(204).end();
+};
+
+const currentUser = async (req, res, next) => {
+  const { email, subscription } = req.user;
+  res.json({ email, subscription });
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  currentUser,
+  logoutUser,
 };
