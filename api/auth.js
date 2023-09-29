@@ -10,12 +10,12 @@ const {
 } = require("../controller/auth");
 const { authenticate } = require("../middlewares");
 
-authRouter.post("/users/register", registerUser);
+authRouter.post("/register", registerUser);
 
-authRouter.post("/users/login", loginUser);
+authRouter.post("/login", loginUser);
 
-authRouter.post("/users/logout", authenticate, logoutUser);
+authRouter.post("/logout", authenticate, logoutUser);
 
-authRouter.get("/users/current", authenticate, currentUser);
+authRouter.get("/current", authenticate, currentUser);
 
 module.exports = authRouter;
