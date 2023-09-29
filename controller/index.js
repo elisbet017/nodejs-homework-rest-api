@@ -49,7 +49,7 @@ const add = async (res, req, next) => {
     const contact = await addContact({ ...body, owner });
     res.res.status(201).json(contact);
   } catch (e) {
-    next();
+    next(e);
   }
 };
 
