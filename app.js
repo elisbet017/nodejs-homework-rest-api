@@ -6,14 +6,16 @@ require("dotenv").config();
 const app = express();
 
 const contactsRouter = require("./api");
-const authRouter = require("./api/auth")
+const authRouter = require("./api/auth");
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+
 
 app.use(cors());
 app.use(express.json());
 app.use(logger(formatsLogger));
+app.use(express.static("public"));
 
-app.use("/users", authRouter)
+app.use("/users", authRouter);
 app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
@@ -25,4 +27,4 @@ app.use((err, _, res, next) => {
   res.status(status).json({ message });
 });
 
-module.exports = app;
+module.exports = {app};
