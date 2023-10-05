@@ -86,15 +86,19 @@ const currentUser = async (req, res, next) => {
 };
 
 const updateAvatar = async (req, res) => {
-  const { _id } = req.user;
-  const { path: tempUpload, originalname } = req.file;
-  await resizeAvatar(tempUpload);
-  const fileName = `${_id}_${originalname}`;
-  const resultUpload = path.join(avatarsDir, fileName);
-  await fs.rename(tempUpload, resultUpload);
-  const avatarURL = path.join("avatars", fileName);
-  await updateUserAvatar(_id, avatarURL);
-  res.json({ avatarURL });
+  try {
+    const { _id } = req.user;
+    const { path: tempUpload, originalname } = req.file;
+    await resizeAvatar(tempUpload);
+    const fileName = `${_id}_${originalname}`;
+    const resultUpload = path.join(avatarsDir, fileName);
+    await fs.rename(tempUpload, resultUpload);
+    const avatarURL = path.join("avatars", fileName);
+    await updateUserAvatar(_id, avatarURL);
+    res.json({ avatarURL });
+  } catch (e) {
+    res.status(400).json({ message: "No files" });
+  }
 };
 
 module.exports = {
