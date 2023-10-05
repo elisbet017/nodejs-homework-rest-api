@@ -18,6 +18,7 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    avatarURL: String,
     token: String,
   },
   { versionKey: false, timestamps: true }
@@ -25,12 +26,12 @@ const userSchema = new Schema(
 
 const registerSchema = Joi.object({
   email: Joi.string().required(),
-  password: Joi.string().required()
+  password: Joi.string().required(),
 });
 
 const loginSchema = Joi.object({
   email: Joi.string().required(),
-  password: Joi.string().required()
+  password: Joi.string().required(),
 });
 
 const User = mongoose.model("user", userSchema);
