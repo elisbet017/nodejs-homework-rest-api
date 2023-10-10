@@ -11,10 +11,4 @@ const createToken = (id) => {
   return token;
 };
 
-// try {
-//   const { id } = jwt.verify(token, SECRET_KEY);
-// } catch (e) {
-//   console.log(e.message)
-// }
-
 module.exports = createToken;

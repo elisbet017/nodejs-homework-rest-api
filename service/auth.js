@@ -5,14 +5,26 @@ const register = async (body) => {
   return result;
 };
 
+const verify = async (verificationToken) => {
+  const user = await User.findOne({ verificationToken });
+  return user || null;
+};
+
+const updateVerification = async (_id) => {
+  await User.findByIdAndUpdate(_id, {
+    verificationToken: null,
+    verify: true,
+  });
+};
+
 const login = async (body) => {
   const user = await User.findOne({ email: body.email });
   return user || null;
 };
 
 const logout = async (id) => {
-  await User.findByIdAndUpdate(id, {token: ""})
-}
+  await User.findByIdAndUpdate(id, { token: "" });
+};
 
 const findUser = async (id) => {
   const user = await User.findById(id);
@@ -29,9 +41,11 @@ const updateUserAvatar = async (id, avatar) => {
 
 module.exports = {
   register,
+  verify,
   login,
   logout,
   findUser,
   updateToken,
   updateUserAvatar,
+  updateVerification,
 };
