@@ -18,6 +18,14 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
     avatarURL: String,
     token: String,
   },
@@ -29,9 +37,8 @@ const registerSchema = Joi.object({
   password: Joi.string().required(),
 });
 
-const loginSchema = Joi.object({
+const verifySchema = Joi.object({
   email: Joi.string().required(),
-  password: Joi.string().required(),
 });
 
 const User = mongoose.model("user", userSchema);
@@ -39,6 +46,6 @@ const User = mongoose.model("user", userSchema);
 module.exports = {
   userSchema,
   registerSchema,
-  loginSchema,
+  verifySchema,
   User,
 };

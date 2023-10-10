@@ -1,6 +1,4 @@
-const {
-  registerSchema,
-} = require("../models/user.js");
+const { registerSchema, verifySchema } = require("../models/user.js");
 const { addSchema, statusSchema } = require("../models/contact.js");
 const { requestError } = require("./requestError.js");
 
@@ -27,9 +25,20 @@ const validateUser = (res, body) => {
   }
 };
 
+const validateEmail = (res, body) => {
+  const validatedData = verifySchema.validate(body);
+  if (validatedData.error) {
+    if (validatedData.error.details[0].message === '"email" is required') {
+      return res.status(400).json({ message: "missing required field email" });
+    }
+    requestError(res, validatedData.error);
+  }
+};
+
 module.exports = {
   validateBody,
   validateUpdatedFields,
   validateStatusBody,
   validateUser,
+  validateEmail,
 };
